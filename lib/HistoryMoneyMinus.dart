@@ -33,9 +33,14 @@ class _PageMinusState extends State<PageMinus> {
   void initState() {
 
 
-    updateContent();
     super.initState();
+    updateContent();
+    setState(() {
+
+    });
+
   }
+
 
   Icon iconSumm(int summ){
     if(summ > 0){
@@ -74,148 +79,152 @@ class _PageMinusState extends State<PageMinus> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 18.0),
-                child:                       Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0, top: 12),
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(20.0)),
-                            side: BorderSide(color: Colors.green)),
-                        color: Colors.transparent,
-                        textColor: Colors.green,
-                        onPressed: () async{
-                          displayDialog();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 3.0, right: 3, top: 3, bottom: 3),
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.only(right: 3.0),
-                                  child: SizedBox(
-                                    width: 4,
+                child:
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0, top: 12),
+                        child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(20.0)),
+                              side: BorderSide(color: Colors.green)),
+                          color: Colors.transparent,
+                          textColor: Colors.green,
+                          onPressed: () async{
+                            displayDialog(false);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 3.0, right: 3, top: 3, bottom: 3),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.only(right: 3.0),
+                                    child: SizedBox(
+                                      width: 4,
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.only(right: 8.0),
-                                  child: Text(
-                                    "Пополнить",
-                                    style: TextStyle(
-                                        color: Colors.green,
-                                        fontSize: 16,
-                                        fontFamily: "MPLUS",
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500),
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.only(right: 8.0),
+                                    child: Text(
+                                      "Пополнить",
+                                      style: TextStyle(
+                                          color: Colors.green,
+                                          fontSize: 16,
+                                          fontFamily: "MPLUS",
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0, top: 12),
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(20.0)),
-                            side: BorderSide(color: Colors.blueAccent)),
-                        color: Colors.transparent,
-                        textColor: Colors.blueAccent,
-                        onPressed: ()async {
+//                      Padding(
+//                        padding: const EdgeInsets.only(left: 12.0, top: 12),
+//                        child: FlatButton(
+//                          shape: RoundedRectangleBorder(
+//                              borderRadius:
+//                              BorderRadius.all(Radius.circular(20.0)),
+//                              side: BorderSide(color: Colors.blueAccent)),
+//                          color: Colors.transparent,
+//                          textColor: Colors.blueAccent,
+//                          onPressed: ()async {
+//
+//                          },
+//                          child: Padding(
+//                            padding: const EdgeInsets.only(
+//                                left: 3.0, right: 3, top: 3, bottom: 3),
+//                            child: FittedBox(
+//                              fit: BoxFit.scaleDown,
+//                              child: Row(
+//                                children: [
+//                                  Padding(
+//                                    padding:
+//                                    const EdgeInsets.only(right: 3.0),
+//                                    child: SizedBox(
+//                                      width: 4,
+//                                    ),
+//                                  ),
+//                                  Padding(
+//                                    padding:
+//                                    const EdgeInsets.only(right: 8.0),
+//                                    child: Text(
+//                                      "Корректировка",
+//                                      style: TextStyle(
+//                                          color: Colors.blueAccent,
+//                                          fontSize: 16,
+//                                          fontFamily: "MPLUS",
+//                                          fontStyle: FontStyle.normal,
+//                                          fontWeight: FontWeight.w500),
+//                                    ),
+//                                  ),
+//                                ],
+//                              ),
+//                            ),
+//                          ),
+//                        ),
+//                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12.0, top: 12, right: 12),
+                        child: FlatButton(
+                          onPressed: ()async {
+                            await updateContent();
+                            setState(() {
 
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 3.0, right: 3, top: 3, bottom: 3),
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.only(right: 3.0),
-                                  child: SizedBox(
-                                    width: 4,
+                            });
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(20.0)),
+                              side: BorderSide(color: colorSumm(Summ))),
+                          color: Colors.transparent,
+                          textColor: Colors.black,
+
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 3.0, right: 3, top: 3, bottom: 3),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.only(right: 3.0),
+                                    child: iconSumm(Summ),
                                   ),
-                                ),
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.only(right: 8.0),
-                                  child: Text(
-                                    "Корректировка",
-                                    style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 16,
-                                        fontFamily: "MPLUS",
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500),
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.only(right: 8.0),
+                                    child: Text(
+                                      Summ.toString(),
+                                      style: TextStyle(
+                                          color: colorSumm(Summ),
+                                          fontSize: 16,
+                                          fontFamily: "MPLUS",
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 12.0, top: 12, right: 12),
-                      child: FlatButton(
-                        onPressed: ()async {
-                          await updateContent();
-                          setState(() {
-
-                          });
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(20.0)),
-                            side: BorderSide(color: colorSumm(Summ))),
-                        color: Colors.transparent,
-                        textColor: Colors.black,
-
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 3.0, right: 3, top: 3, bottom: 3),
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.only(right: 3.0),
-                                  child: iconSumm(Summ),
-                                ),
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.only(right: 8.0),
-                                  child: Text(
-                                    Summ.toString(),
-                                    style: TextStyle(
-                                        color: colorSumm(Summ),
-                                        fontSize: 16,
-                                        fontFamily: "MPLUS",
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
 
               ),
@@ -238,7 +247,7 @@ class _PageMinusState extends State<PageMinus> {
         padding: const EdgeInsets.only(top : 8.0),
         child: Column(
           children: List.generate(contentMoneyMinus.length, (index) {
-            if(index == 0)    Summ = 0;
+           if(index == 0)    Summ = 0;
 
             return Day(contentMoneyMinus[index]);
           }),
@@ -246,14 +255,27 @@ class _PageMinusState extends State<PageMinus> {
       );
     }
   }
-  void displayDialog() {
+
+  //Добавление корректировки
+  void displayDialog(bool marker) {
     TextEditingController controllersumm = TextEditingController();
     TextEditingController controllerComment = TextEditingController();
-    
     showDialog(
       context: context,
       builder: (BuildContext context) => new CupertinoAlertDialog(
-        title: new Text("Новая запись"),
+        title:  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text("Новая запись"),
+            GestureDetector(
+              onTap: (){
+                Navigator.of(context).pop();
+                displayDialog(!marker);
+
+              },
+              child: Icon(Icons.monetization_on, color: marker?Colors.green:Colors.red,  size: 24,),
+            )
+          ],
+        ),
         content: Column(
           children: <Widget>[
             Material(
@@ -279,15 +301,27 @@ class _PageMinusState extends State<PageMinus> {
         ),
         actions: [
           CupertinoDialogAction(
+            onPressed: (){
+              Navigator.pop(context);
+            },
               isDestructiveAction: true, child: new Text("Закрыть")),
           CupertinoDialogAction(
               onPressed: ()async{
-                await DBProvider.db.insertExpansCorrect(Expans(1,DateNull(setDateMode(DateTime.now())), controllerComment.text, int.parse(controllersumm.text), "true"));
-                await updateContent();
-                setState(() {
-                  
-                });
-                Navigator.pop(context);
+                if(controllersumm.text != "" || controllersumm != null) {
+                  if (controllerComment.text != ""|| controllerComment != null) {
+                    print(marker);
+                    await DBProvider.db.insertExpansCorrect(Expans(
+                        marker ? 999998 : 999999,
+                        DateNull(setDateMode(DateTime.now())),
+                        controllerComment.text, int.parse(controllersumm.text),
+                        "true"));
+                    await updateContent();
+                    setState(() {
+
+                    });
+                    Navigator.pop(context);
+                  }
+                }
               },
               isDefaultAction: true, child: new Text("Добавить")
 
@@ -301,8 +335,11 @@ class _PageMinusState extends State<PageMinus> {
 
   Widget Day(MoneyMinus contentOneDay){
     print("- Экран загрузки Содержание записи ");
-    Widget summController(int summ){
-      Summ += summ;
+
+
+    //Выводит сумму нужного цвета
+    Widget summController(int summ, bool identificationSumm){
+      identificationSumm? Summ += summ: Summ+=0;
       if(summ > 0){
         return Text("+"+summ.toString(), style: TextStyle(color: Colors.green, fontSize: 18),);
       }else{
@@ -310,10 +347,8 @@ class _PageMinusState extends State<PageMinus> {
           return Text(""+summ.toString(), style: TextStyle(color: Colors.green, fontSize: 18),);
         }else{
           return Text(""+summ.toString(), style: TextStyle(color: Colors.red, fontSize: 18),);
-
         }
       }
-
     }
 
     return Column(
@@ -336,17 +371,17 @@ class _PageMinusState extends State<PageMinus> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [BoxShadow(
-                      color: Color.fromRGBO(34, 15, 180, .3),
+                      color: contentOneDay.plusList[contentOneDay.plusList.length - index - 1].assignId==999999?Color.fromRGBO(34, 15, 180, .3):Color.fromRGBO(70, 240, 30, .3),
                       blurRadius: blurSize,
                       offset: Offset(-2.5, 7)
                   )]
               ),     
               width: MediaQuery.of(context).size.width*0.90,
               child: Padding(
-                padding: const EdgeInsets.all(18.0),
+                padding: EdgeInsets.all(18.0),
                 child: Row(
                   children: <Widget>[
-                    summController(contentOneDay.plusList[contentOneDay.plusList.length - index - 1].summ),
+                    summController(contentOneDay.plusList[contentOneDay.plusList.length - index - 1].summ,contentOneDay.plusList[contentOneDay.plusList.length - index - 1].assignId==999998?false:true ),
                     SizedBox(width: 10,),
                     Text(contentOneDay.plusList[contentOneDay.plusList.length - index - 1].comment, style: TextStyle(color: Colors.black87, fontSize: 16),),
                   ],
@@ -375,7 +410,7 @@ class _PageMinusState extends State<PageMinus> {
               padding: const EdgeInsets.all(18.0),
               child: Row(
                 children: <Widget>[
-                  summController(-contentOneDay.notesList[index].expans[index2].summ),
+                  summController(-contentOneDay.notesList[index].expans[index2].summ,true),
                   SizedBox(width: 10,),
                   Text(contentOneDay.notesList[index].expans[index2].comment, style: TextStyle(color: Colors.black87, fontSize: 16),),
                 ],
@@ -383,6 +418,9 @@ class _PageMinusState extends State<PageMinus> {
             );
             }),);
           }) , ),
+        ),
+        SizedBox(
+          height: 20,
         )
       ],
     );

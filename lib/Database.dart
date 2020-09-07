@@ -3,6 +3,8 @@ import 'Objects.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class DBProvider{
 
@@ -301,11 +303,44 @@ class DBProvider{
     return VisitList;
   }
 
+  Future<List<NoteMoneyPlus>> getNotesMoneyPlus()async{
+    print("getNotesMoneyPlus");
+    Database db = await this.database;
+    final List<Map<String, dynamic>> NotesMoneyPlusMapList =
+        await db.query(tablehistoryMoneyPlus);
+    List<NoteMoneyPlus> NotesMoneyPlusList = [];
+    NotesMoneyPlusMapList.forEach((element) {
+      NotesMoneyPlusList.add(NoteMoneyPlus.fromMap(element));
+    });
+    NotesMoneyPlusList = sortListMoneyPlus(NotesMoneyPlusList);
 
+    return NotesMoneyPlusList;
 
+  }
 
+  Future<bool> insertNoteMoneyPlus (NoteMoneyPlus note)async{
+    Database db = await this.database;
+    await db.insert(tablehistoryMoneyPlus, note.toMap());
+    return true;
+  }
 
+  Future<bool> deleteNoteMoneyPlus (NoteMoneyPlus note)async{
+    print("delete Note Money Plus");
+    Database db = await this.database;
+    await db.delete(tablehistoryMoneyPlus, where: "$historyMoneyPlusDate = ?", whereArgs: [note.date]);
+    return true;
+  }
 
+  Future<bool> updateDateUp (String date)async{
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("DateUp", date);
+    return true;
+  }
 
+  Future<String> getDateUp ()async{
+    final prefs = await SharedPreferences.getInstance();
+    var DateUp = await prefs.getString("DateUp")??'none';
+    return DateUp;
+  }
 
 }

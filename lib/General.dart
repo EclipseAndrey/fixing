@@ -1,4 +1,5 @@
 import 'package:fixing/Database.dart';
+import 'package:fixing/views/VisitBottom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +11,7 @@ class General extends StatefulWidget {
   @override
   _GeneralState createState() => _GeneralState();
 }
+
 double blurSize = 10;
 bool loadContent= true;
 List<Note> noteList = [];
@@ -49,162 +51,169 @@ class _GeneralState extends State<General> {
                   height: 370,
                   child: Column(
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0, top: 12),
-                            child: FlatButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0)),
-                                  side: BorderSide(color: Colors.redAccent)),
-                              color: Colors.transparent,
-                              textColor: Colors.redAccent,
-                              onPressed: () async{
-                                if(controllertext.text != "" && controllertext.text != null)await DBProvider.db.insertComments(Comment(DateNull(setDateMode(DateTime.now())), controllertext.text));
-                                Navigator.pop(context);
-                                await updateContent();
-                                setState(() {
+                      Container(
+                        width: MediaQuery.of(context).size.width*0.90,
 
-                                });
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 3.0, right: 3, top: 3, bottom: 3),
-                                child: FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                        const EdgeInsets.only(right: 3.0),
-                                        child: SizedBox(
-                                          width: 4,
-                                        ),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12.0, top: 12),
+                                child: FlatButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0)),
+                                      side: BorderSide(color: Colors.redAccent)),
+                                  color: Colors.transparent,
+                                  textColor: Colors.redAccent,
+                                  onPressed: () async{
+                                    if(controllertext.text != "" && controllertext.text != null)await DBProvider.db.insertComments(Comment(DateNull(setDateMode(DateTime.now())), controllertext.text));
+                                    Navigator.pop(context);
+                                    await updateContent();
+                                    setState(() {
+
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 3.0, right: 3, top: 3, bottom: 3),
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.only(right: 3.0),
+                                            child: SizedBox(
+                                              width: 4,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.only(right: 8.0),
+                                            child: Text(
+                                              "Сегодня",
+                                              style: TextStyle(
+                                                  color: Colors.redAccent,
+                                                  fontSize: 16,
+                                                  fontFamily: "MPLUS",
+                                                  fontStyle: FontStyle.normal,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Padding(
-                                        padding:
-                                        const EdgeInsets.only(right: 8.0),
-                                        child: Text(
-                                          "Сегодня",
-                                          style: TextStyle(
-                                              color: Colors.redAccent,
-                                              fontSize: 16,
-                                              fontFamily: "MPLUS",
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0, top: 12),
-                            child: FlatButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0)),
-                                  side: BorderSide(color: Colors.redAccent)),
-                              color: Colors.transparent,
-                              textColor: Colors.redAccent,
-                              onPressed: ()async {
-                                print("DATE COMMENT INSERT "+DateNull(setDateMode(DateTime.now().add(Duration(days: -1)))));
-                                if(controllertext.text != "" && controllertext.text != null)await DBProvider.db.insertComments(Comment(DateNull(setDateMode(DateTime.now().add(Duration(days: -1)))), controllertext.text));
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12.0, top: 12),
+                                child: FlatButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0)),
+                                      side: BorderSide(color: Colors.redAccent)),
+                                  color: Colors.transparent,
+                                  textColor: Colors.redAccent,
+                                  onPressed: ()async {
+                                    print("DATE COMMENT INSERT "+DateNull(setDateMode(DateTime.now().add(Duration(days: -1)))));
+                                    if(controllertext.text != "" && controllertext.text != null)await DBProvider.db.insertComments(Comment(DateNull(setDateMode(DateTime.now().add(Duration(days: -1)))), controllertext.text));
 
-                                Navigator.pop(context);
-                                await updateContent();
-                                setState(() {
+                                    Navigator.pop(context);
+                                    await updateContent();
+                                    setState(() {
 
-                                });
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 3.0, right: 3, top: 3, bottom: 3),
-                                child: FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                        const EdgeInsets.only(right: 3.0),
-                                        child: SizedBox(
-                                          width: 4,
-                                        ),
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 3.0, right: 3, top: 3, bottom: 3),
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.only(right: 3.0),
+                                            child: SizedBox(
+                                              width: 4,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.only(right: 8.0),
+                                            child: Text(
+                                              "Вчера",
+                                              style: TextStyle(
+                                                  color: Colors.redAccent,
+                                                  fontSize: 16,
+                                                  fontFamily: "MPLUS",
+                                                  fontStyle: FontStyle.normal,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Padding(
-                                        padding:
-                                        const EdgeInsets.only(right: 8.0),
-                                        child: Text(
-                                          "Вчера",
-                                          style: TextStyle(
-                                              color: Colors.redAccent,
-                                              fontSize: 16,
-                                              fontFamily: "MPLUS",
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 12.0, top: 12, right: 12),
-                            child: FlatButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0)),
-                                  side: BorderSide(color: Colors.blue)),
-                              color: Colors.transparent,
-                              textColor: Colors.blue,
-                              onPressed: () {
-                                Navigator.pop(context);
-                                setState(() {
-
-                                });
-                              },
-                              child: Padding(
+                              Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 3.0, right: 3, top: 3, bottom: 3),
-                                child: FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                        const EdgeInsets.only(right: 3.0),
-                                        child: Icon(
-                                          Icons.check,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                        const EdgeInsets.only(right: 8.0),
-                                        child: Text(
-                                          "Другой день",
-                                          style: TextStyle(
+                                    left: 12.0, top: 12, right: 12),
+                                child: FlatButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0)),
+                                      side: BorderSide(color: Colors.blue)),
+                                  color: Colors.transparent,
+                                  textColor: Colors.blue,
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    setState(() {
+
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 3.0, right: 3, top: 3, bottom: 3),
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.only(right: 3.0),
+                                            child: Icon(
+                                              Icons.check,
                                               color: Colors.blue,
-                                              fontSize: 16,
-                                              fontFamily: "MPLUS",
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w500),
-                                        ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.only(right: 8.0),
+                                            child: Text(
+                                              "Другой день",
+                                              style: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontSize: 16,
+                                                  fontFamily: "MPLUS",
+                                                  fontStyle: FontStyle.normal,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                       Container(
                         height: 300,
@@ -233,156 +242,7 @@ class _GeneralState extends State<General> {
 
       _showModalBottomSheet(context);
     }
-    void VisitBottom(){
-      void _showModalBottomSheet(BuildContext context) {
-        showModalBottomSheet<void>(
-          context: context,
-          barrierColor: Colors.black45,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          isScrollControlled: true,
-          builder: (context) {
-            return StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState2) {
-                return Container(
-                  height: 370,
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0, top: 12),
-                            child: FlatButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0)),
-                                  side: BorderSide(color: Colors.redAccent)),
-                              color: Colors.transparent,
-                              textColor: Colors.redAccent,
-                              onPressed: () async{
-                                if(Visitdate != "")await DBProvider.db.insertVisitOn(Visitdate);
-                                Visitdate = "";
-                                Navigator.pop(context);
-                                await updateContent();
-                                setState(() {
 
-                                });
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 3.0, right: 3, top: 3, bottom: 3),
-                                child: FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                        const EdgeInsets.only(right: 3.0),
-                                        child: SizedBox(
-                                          width: 4,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                        const EdgeInsets.only(right: 8.0),
-                                        child: Text(
-                                          "Пришел",
-                                          style: TextStyle(
-                                              color: Colors.redAccent,
-                                              fontSize: 16,
-                                              fontFamily: "MPLUS",
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 12.0, top: 12, right: 12),
-                            child: FlatButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0)),
-                                  side: BorderSide(color: Colors.blue)),
-                              color: Colors.transparent,
-                              textColor: Colors.blue,
-                              onPressed: () async {
-                                if(Visitdate != "")await DBProvider.db.insertVisitOff(Visitdate);
-                                Visitdate = "";
-                                Navigator.pop(context);
-                                await updateContent();
-                                setState(() {
-
-                                });
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 3.0, right: 3, top: 3, bottom: 3),
-                                child: FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                        const EdgeInsets.only(right: 3.0),
-                                        child: Icon(
-                                          Icons.check,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                        const EdgeInsets.only(right: 8.0),
-                                        child: Text(
-                                          "Ушел",
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontSize: 16,
-                                              fontFamily: "MPLUS",
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        height: 300,
-
-                        child: CupertinoDatePicker(
-                            initialDateTime: DateTime.now(),
-                            mode: CupertinoDatePickerMode.dateAndTime,
-                            onDateTimeChanged: (DateTime dateTime) {
-                              Visitdate = setDateMode(dateTime);
-                              print(dateTime.toString());
-                              setState(() {
-
-                              });
-
-                            }),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
-            //     return MakeOrder();
-          },
-        );
-      }
-
-      _showModalBottomSheet(context);
-    }
 
     return SingleChildScrollView(
       child: Container(
@@ -444,10 +304,14 @@ class _GeneralState extends State<General> {
                 child: Row( mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     GestureDetector(
-                      onTap: (){
+                      onTap: ()async {
                         Visitdate = setDateMode(DateTime.now());
 
-                        VisitBottom();
+                        await VisitBottom(Visitdate, context);
+                        await updateContent();
+                        setState(() {
+
+                        });
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -465,17 +329,17 @@ class _GeneralState extends State<General> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(top: 14.0, left: 18, ),
+                              padding: const EdgeInsets.only(top: 14.0, left: 14, ),
                               child: FittedBox(
                                   fit: BoxFit.scaleDown,
-                                  child: Text("Отметиться", style: TextStyle(fontSize: 18, color: Colors.black),)),
+                                  child: Text("Отметиться", style: TextStyle(fontSize: 16, color: Colors.black),)),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 14.0, left: 18, ),
                               child: FittedBox(
                                   fit: BoxFit.scaleDown,
 
-                                  child: Text("13.07", style: TextStyle(fontSize: 18, color: Colors.black45),)),
+                                  child: Text("   ", style: TextStyle(fontSize: 18, color: Colors.black45),)),
                             ),
 
                           ],
@@ -505,13 +369,13 @@ class _GeneralState extends State<General> {
                               padding: const EdgeInsets.only(top: 14.0, left: 18,right: 12 ),
                               child: FittedBox(
                                   fit: BoxFit.scaleDown,
-                                  child: Text("Заметка", style: TextStyle(fontSize: 18, color: Colors.black, decoration: TextDecoration.none),)),
+                                  child: Text("Заметка", style: TextStyle(fontSize: 16, color: Colors.black, decoration: TextDecoration.none),)),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 14.0, left: 18, ),
                               child: FittedBox(
                                   fit: BoxFit.scaleDown,
-                                  child: Text("Добавить", style: TextStyle(fontSize: 18, color: Colors.black54, decoration: TextDecoration.none),)),
+                                  child: Text("Добавить", style: TextStyle(fontSize: 16, color: Colors.black54, decoration: TextDecoration.none),)),
                             ),
 
                           ],

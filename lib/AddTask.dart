@@ -2,7 +2,7 @@ import 'package:fixing/Database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'Objects.dart';
 
 class AddTask extends StatefulWidget {
@@ -10,43 +10,52 @@ class AddTask extends StatefulWidget {
   _AddTaskState createState() => _AddTaskState();
 }
 
-
-
-class zatrat{
+class zatrat {
   String comment;
   int summ;
+
   zatrat(this.summ, this.comment);
 }
 
 TextEditingController controllerAddress = TextEditingController();
 TextEditingController controllerTask = TextEditingController();
 TextEditingController controllerComment = TextEditingController();
-String dateTask = DateFormat("yyyy.MM.dd HH:mm", "en_US").format(DateTime.now()).toString();
+String dateTask =
+    DateFormat("yyyy.MM.dd HH:mm", "en_US").format(DateTime.now()).toString();
 String timeSpend = "2020.07.09 01:00";
-String timeStart = DateFormat("yyyy.MM.dd HH:mm", "en_US").format(DateTime.now()).toString();
-List<Expans> zatraty = [Expans(1,"2020.07.09 11:57","На такси", 200, "false"), Expans(1,"2020.07.09 11:57","На такси обратно", 200, "false")];
+String timeStart =
+    DateFormat("yyyy.MM.dd HH:mm", "en_US").format(DateTime.now()).toString();
+List<Expans> zatraty = [
+  Expans(1, "2020.07.09 11:57", "На такси", 200, "false"),
+  Expans(1, "2020.07.09 11:57", "На такси обратно", 200, "false")
+];
 
-void setDateTask(DateTime date){
-  print("sdfsdfsdfsdfsdfsdfsdfsdf"+date.toString());
-  String ye,mo,da,ho,mi;
+void setDateTask(DateTime date) {
+  print("sdfsdfsdfsdfsdfsdfsdfsdf" + date.toString());
+  String ye, mo, da, ho, mi;
   ye = date.year.toString();
-  mo = date.month<10? "0"+date.month.toString(): date.month.toString();
-  da = date.day<10? "0"+date.day.toString(): date.day.toString();
-  ho = date.hour<10? "0"+date.hour.toString(): date.hour.toString();
-  mi = date.minute%60<10?"0"+(date.minute%60).toString():(date.minute%60).toString();
+  mo = date.month < 10 ? "0" + date.month.toString() : date.month.toString();
+  da = date.day < 10 ? "0" + date.day.toString() : date.day.toString();
+  ho = date.hour < 10 ? "0" + date.hour.toString() : date.hour.toString();
+  mi = date.minute % 60 < 10
+      ? "0" + (date.minute % 60).toString()
+      : (date.minute % 60).toString();
 
-  print(ye+"."+mo+"."+da+" "+ ho+":"+mi);
+  print(ye + "." + mo + "." + da + " " + ho + ":" + mi);
 
-  dateTask = ye+"."+mo+"."+da+" "+ ho+":"+mi ;
+  dateTask = ye + "." + mo + "." + da + " " + ho + ":" + mi;
 }
-void setSpendTask(DateTime date){
-  String ye,mo,da,ho,mi;
+
+void setSpendTask(DateTime date) {
+  String ye, mo, da, ho, mi;
   ye = date.year.toString();
-  mo = date.month<10? "0"+date.month.toString(): date.month.toString();
-  da = date.day<10? "0"+date.day.toString(): date.day.toString();
-  ho = date.hour<10? "0"+date.hour.toString(): date.hour.toString();
-  mi = date.minute%60<10?"0"+(date.minute%60).toString():(date.minute%60).toString();
-  timeSpend = ye+"."+mo+"."+da+" "+ ho+":"+mi ;
+  mo = date.month < 10 ? "0" + date.month.toString() : date.month.toString();
+  da = date.day < 10 ? "0" + date.day.toString() : date.day.toString();
+  ho = date.hour < 10 ? "0" + date.hour.toString() : date.hour.toString();
+  mi = date.minute % 60 < 10
+      ? "0" + (date.minute % 60).toString()
+      : (date.minute % 60).toString();
+  timeSpend = ye + "." + mo + "." + da + " " + ho + ":" + mi;
 }
 
 double op = 0;
@@ -56,45 +65,51 @@ class _AddTaskState extends State<AddTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.black
-        ),
-        backgroundColor: Colors.white,
-        actionsIconTheme: IconThemeData(
-          color: Colors.black
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () async {
-              if(controllerTask.text != "" && controllerAddress.text != "") {
-                op = 1;
-                Note step = Note.noId(
-                    dateTask, controllerAddress.text.toString(),
-                    controllerTask.text.toString(), timeSpend, timeStart,
-                    controllerComment.text.toString());
-                List<Expans> step2 = [];
-                for (int i = 0; i < testzatrat.length; i++) {
-                  step2.add(Expans(
-                      1, dateTask, testzatrat[i].comment, testzatrat[i].summ,
-                      "false"));
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.white,
+          actionsIconTheme: IconThemeData(color: Colors.black),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () async {
+                if (controllerTask.text != "" && controllerAddress.text != "") {
+                  op = 1;
+                  Note step = Note.noId(
+                      dateTask,
+                      controllerAddress.text.toString(),
+                      controllerTask.text.toString(),
+                      timeSpend,
+                      timeStart,
+                      controllerComment.text.toString());
+                  List<Expans> step2 = [];
+                  for (int i = 0; i < testzatrat.length; i++) {
+                    step2.add(Expans(1, dateTask, testzatrat[i].comment,
+                        testzatrat[i].summ, "false"));
+                  }
+                  await DBProvider.db.insertNote(step, step2);
+                  controllerAddress.text = "";
+                  controllerComment.text = "";
+                  controllerTask.text = "";
+                  testzatrat = [];
+                  Future.delayed(const Duration(milliseconds: 300), () {
+                    Navigator.pop(context);
+                  });
+                } else {
+                  Fluttertoast.showToast(
+                      msg: "Адрес или задача не введены",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0);
                 }
-                await DBProvider.db.insertNote(step, step2);
-                controllerAddress.text = "";
-                controllerComment.text = "";
-                controllerTask.text = "";
-                testzatrat = [];
-                Future.delayed(const Duration(milliseconds: 300), () {Navigator.pop(context);});
-
-              }
-             setState(() {
-
-             });
-            },
-          ),
-        ],
-      ),
+                setState(() {});
+              },
+            ),
+          ],
+        ),
         backgroundColor: Colors.white,
         body: Stack(
           children: <Widget>[
@@ -105,7 +120,7 @@ class _AddTaskState extends State<AddTask> {
               ),
             ),
             Opacity(
-              opacity: 1-op,
+              opacity: 1 - op,
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 child: SingleChildScrollView(
@@ -122,22 +137,24 @@ class _AddTaskState extends State<AddTask> {
                                 padding: const EdgeInsets.only(top: 14.0),
                                 child: selectAddress(),
                               ),
-                             Padding(
-                               padding: const EdgeInsets.only(top: 14.0),
-                               child: selectTask(),
-                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 14.0),
-                              child: selectTimeSpend(),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 14.0),
-                              child: selectExpanses(),
-                            ),
-                  Padding(
-                    padding: const EdgeInsets.only(top:14.0),
-                    child: selectComment(),
-                  ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 14.0),
+                                child: selectTask(),
+                              ),
+
+                              Padding(
+                                padding: const EdgeInsets.only(top: 14.0),
+                                child: selectExpanses(),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 14.0),
+                                child: selectComment(),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 14.0),
+                                child: selectTimeSpend(),
+                              ),
+                              SizedBox(height: 20,)
                             ],
                           ),
                         ),
@@ -149,6 +166,14 @@ class _AddTaskState extends State<AddTask> {
             ),
           ],
         ));
+  }
+
+  String minute0(int min) {
+    if (min < 10) {
+      return "0" + min.toString();
+    } else {
+      return min.toString();
+    }
   }
 
   Widget selectDate(BuildContext context) {
@@ -198,7 +223,25 @@ class _AddTaskState extends State<AddTask> {
                 child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      DateFormat("yyyy.MM.dd HH:mm", "en_US").parse(dateTask).day.toString() +" "+ month( DateFormat("yyyy.MM.dd HH:mm", "en_US").parse(dateTask).month.toString())+"  "+ DateFormat("yyyy.MM.dd HH:mm", "en_US").parse(dateTask).hour.toString() +":" + DateFormat("yyyy.MM.dd HH:mm", "en_US").parse(dateTask).minute.toString() +" ",
+                      DateFormat("yyyy.MM.dd HH:mm", "en_US")
+                              .parse(dateTask)
+                              .day
+                              .toString() +
+                          " " +
+                          month(DateFormat("yyyy.MM.dd HH:mm", "en_US")
+                              .parse(dateTask)
+                              .month
+                              .toString()) +
+                          "  " +
+                          DateFormat("yyyy.MM.dd HH:mm", "en_US")
+                              .parse(dateTask)
+                              .hour
+                              .toString() +
+                          ":" +
+                          minute0(DateFormat("yyyy.MM.dd HH:mm", "en_US")
+                              .parse(dateTask)
+                              .minute) +
+                          " ",
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.black87,
@@ -288,9 +331,7 @@ class _AddTaskState extends State<AddTask> {
                             textColor: Colors.blue,
                             onPressed: () {
                               Navigator.pop(context);
-                              setState(() {
-
-                              });
+                              setState(() {});
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(
@@ -331,17 +372,12 @@ class _AddTaskState extends State<AddTask> {
                     Container(
                       height: 300,
                       child: CupertinoDatePicker(
-
-
                           initialDateTime: DateTime.now(),
                           mode: CupertinoDatePickerMode.dateAndTime,
                           onDateTimeChanged: (DateTime dateTime) {
                             print(dateTime.toString());
                             setDateTask(dateTime);
-                            setState(() {
-
-                            });
-
+                            setState(() {});
                           }),
                     ),
                   ],
@@ -379,7 +415,7 @@ class _AddTaskState extends State<AddTask> {
                           child: FlatButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
+                                    BorderRadius.all(Radius.circular(20.0)),
                                 side: BorderSide(color: Colors.redAccent)),
                             color: Colors.transparent,
                             textColor: Colors.redAccent,
@@ -395,14 +431,14 @@ class _AddTaskState extends State<AddTask> {
                                   children: [
                                     Padding(
                                       padding:
-                                      const EdgeInsets.only(right: 3.0),
+                                          const EdgeInsets.only(right: 3.0),
                                       child: SizedBox(
                                         width: 4,
                                       ),
                                     ),
                                     Padding(
                                       padding:
-                                      const EdgeInsets.only(right: 8.0),
+                                          const EdgeInsets.only(right: 8.0),
                                       child: Text(
                                         "Отмена",
                                         style: TextStyle(
@@ -425,15 +461,13 @@ class _AddTaskState extends State<AddTask> {
                           child: FlatButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
+                                    BorderRadius.all(Radius.circular(20.0)),
                                 side: BorderSide(color: Colors.blue)),
                             color: Colors.transparent,
                             textColor: Colors.blue,
                             onPressed: () {
                               Navigator.pop(context);
-                              setState(() {
-
-                              });
+                              setState(() {});
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(
@@ -444,7 +478,7 @@ class _AddTaskState extends State<AddTask> {
                                   children: [
                                     Padding(
                                       padding:
-                                      const EdgeInsets.only(right: 3.0),
+                                          const EdgeInsets.only(right: 3.0),
                                       child: Icon(
                                         Icons.check,
                                         color: Colors.blue,
@@ -452,7 +486,7 @@ class _AddTaskState extends State<AddTask> {
                                     ),
                                     Padding(
                                       padding:
-                                      const EdgeInsets.only(right: 8.0),
+                                          const EdgeInsets.only(right: 8.0),
                                       child: Text(
                                         "Сохранить",
                                         style: TextStyle(
@@ -474,8 +508,6 @@ class _AddTaskState extends State<AddTask> {
                     Container(
                       height: 300,
                       child: CupertinoDatePicker(
-
-
                           initialDateTime: DateTime.now(),
                           mode: CupertinoDatePickerMode.time,
                           onDateTimeChanged: (DateTime dateTime) {
@@ -483,7 +515,6 @@ class _AddTaskState extends State<AddTask> {
                             setState(() {
                               setSpendTask(dateTime);
                             });
-
                           }),
                     ),
                   ],
@@ -538,11 +569,7 @@ class _AddTaskState extends State<AddTask> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                top: 8.0,
-                left: 18,
-                bottom: 8,
-                right: 18
-              ),
+                  top: 8.0, left: 18, bottom: 8, right: 18),
               child: TextField(
                 controller: controllerAddress,
               ),
@@ -592,11 +619,7 @@ class _AddTaskState extends State<AddTask> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                top: 8.0,
-                left: 18,
-                  bottom: 8,
-                  right: 18
-              ),
+                  top: 8.0, left: 18, bottom: 8, right: 18),
               child: TextField(
                 controller: controllerTask,
               ),
@@ -610,8 +633,8 @@ class _AddTaskState extends State<AddTask> {
   Widget selectTimeSpend() {
     String end = "";
     var timeSpend1 = DateFormat("yyyy.MM.dd HH:mm", "en_US").parse(timeSpend);
-    if(timeSpend1.hour > 0) end +="${timeSpend1.hour} ч. ";
-    end += (timeSpend1.minute%60).toString() + " мин.";
+    if (timeSpend1.hour > 0) end += "${timeSpend1.hour} ч. ";
+    end += (timeSpend1.minute % 60).toString() + " мин.";
 
     return GestureDetector(
       onTap: () {
@@ -686,50 +709,43 @@ class _AddTaskState extends State<AddTask> {
                 color: Colors.transparent,
                 child: TextField(
                   controller: summNoteController,
-                  decoration: InputDecoration(
-                      hintText: "Сумма"
-                  ),
+                  decoration: InputDecoration(hintText: "Сумма"),
                 ),
               ),
               Material(
                 color: Colors.transparent,
                 child: TextField(
                   controller: commentNoteController,
-                  decoration: InputDecoration(
-                      hintText: "Комментарий"
-                  ),
+                  decoration: InputDecoration(hintText: "Комментарий"),
                 ),
               )
-
             ],
           ),
           actions: [
             CupertinoDialogAction(
                 isDestructiveAction: true, child: new Text("Закрыть")),
             CupertinoDialogAction(
-              onPressed: (){
-                setState(() {
-                  testzatrat.add(zatrat(int.parse(summNoteController.text),commentNoteController.text));
-                });
-                Navigator.pop(context);
-              },
-                isDefaultAction: true, child: new Text("Добавить")
-
-            ),
-
+                onPressed: () {
+                  setState(() {
+                    testzatrat.add(zatrat(int.parse(summNoteController.text),
+                        commentNoteController.text));
+                  });
+                  Navigator.pop(context);
+                },
+                isDefaultAction: true,
+                child: new Text("Добавить")),
           ],
         ),
       );
     }
+
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         displayDialog();
       },
-      onLongPress: (){
+      onLongPress: () {
         testzatrat = [];
-        setState(() {
-
-        });
+        setState(() {});
       },
       child: Container(
         decoration: BoxDecoration(
@@ -776,11 +792,17 @@ class _AddTaskState extends State<AddTask> {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.all(2.0),
-                          child: Text(testzatrat[index].summ.toString(), style: TextStyle(color: Colors.redAccent),),
+                          child: Text(
+                            testzatrat[index].summ.toString(),
+                            style: TextStyle(color: Colors.redAccent),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(testzatrat[index].comment.toString(), style: TextStyle(color: Colors.black54),),
+                          child: Text(
+                            testzatrat[index].comment.toString(),
+                            style: TextStyle(color: Colors.black54),
+                          ),
                         ),
                       ],
                     );
@@ -811,8 +833,7 @@ class _AddTaskState extends State<AddTask> {
 
   Widget selectComment() {
     return GestureDetector(
-      onTap: () {
-      },
+      onTap: () {},
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white,
@@ -848,11 +869,7 @@ class _AddTaskState extends State<AddTask> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                  top: 8.0,
-                  left: 18,
-                  right: 18
-                ),
+                padding: const EdgeInsets.only(top: 8.0, left: 18, right: 18),
                 child: TextField(
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
@@ -864,6 +881,5 @@ class _AddTaskState extends State<AddTask> {
         ),
       ),
     );
-
   }
 }

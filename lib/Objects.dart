@@ -152,6 +152,28 @@ class Note {
   }
 }
 
+class NoteMoneyPlus {
+  var date;
+  String comment;
+  int summ;
+
+  NoteMoneyPlus(this.date, this.comment, this.summ);
+
+  Map<String, dynamic> toMap(){
+    final map = Map<String, dynamic>();
+    map['date'] = date;
+    map['comment'] = comment;
+    map['summ'] = summ;
+    return map;
+  }
+  NoteMoneyPlus.fromMap(Map<String, dynamic> map){
+    date = map['date'];
+    comment = map['comment'];
+    summ = map['summ'];
+  }
+
+}
+
 
 String month(String month) {
   switch (month) {
@@ -200,9 +222,7 @@ String setDateMode(DateTime date) {
   mo = date.month < 10 ? "0" + date.month.toString() : date.month.toString();
   da = date.day < 10 ? "0" + date.day.toString() : date.day.toString();
   ho = date.hour < 10 ? "0" + date.hour.toString() : date.hour.toString();
-  mi = date.minute % 60 < 10
-      ? "0" + (date.minute % 60).toString()
-      : (date.minute % 60).toString();
+  mi = date.minute % 60 < 10 ? "0" + (date.minute % 60).toString() : (date.minute % 60).toString();
   return ye + "." + mo + "." + da + " " + ho + ":" + mi;
 }
 
@@ -258,21 +278,25 @@ Future<List<MoneyMinus>> getContentMoneyMinus()async{
     _ListNotes[i].expans = await DBProvider.db.getExpans(_ListNotes[i].id);
   }
 
+
+  //если даты такой нет и есть затраты занести дату в список
   for (int i = 0; i < _ListNotes.length; i++) {
     DateTime step =
     DateFormat("yyyy.MM.dd HH:mm").parse(DateNull(_ListNotes[i].date));
     bool find = false;
     for (int j = 0; j < _Dates.length; j++) {
-      if (_Dates[j] == step && _ListNotes[i].expans.length > 0) {
-        find = true;
-        j = _Dates.length;
-        break;
-      }
+      if (_Dates[j] == step) {
+          find = true;
+          j = _Dates.length;
+          break;
+        }
     }
     if (find == false) {
+      if(_ListNotes[i].expans.length > 0)
       _Dates.add(step);
     }
   }
+
 
   for (int i = 0; i < _ListExpansM.length; i++) {
     DateTime step =
@@ -289,6 +313,8 @@ Future<List<MoneyMinus>> getContentMoneyMinus()async{
       _Dates.add(step);
     }
   }
+
+
 
   if (_Dates.length > 1)
     for (int i = 0; i < _Dates.length-1; i++) {
@@ -475,6 +501,27 @@ Future<List<ContentBlocInfo>> getContentBlocs() async {
 }
 
 
+List<NoteMoneyPlus> sortListMoneyPlus (List<NoteMoneyPlus> Notes){
+  for( int i = 0; i < Notes.length; i++){
+    for(int j = 0; j < Notes.length - i - 1; i++){
+      DateTime a = Notes[j].date;
+      DateTime b = Notes[j+1].date;
 
+      if(a.isBefore(b)){
+        Notes[j].date = b;
+        Notes[j+1].date = a;
+      }
+    }
+  }
+
+
+  String total = "=== Money plus ===\n";
+  for(int i = 0; i < Notes.length; i++){
+    total += Notes[i].date.toString() + "\n";
+
+  }
+  print(total);
+
+}
 
 
