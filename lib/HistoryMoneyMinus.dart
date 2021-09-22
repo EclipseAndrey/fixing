@@ -70,66 +70,75 @@ class _PageMinusState extends State<PageMinus> {
   @override
   Widget build(BuildContext context) {
 
-    return SingleChildScrollView(
-      child: Container(
-        width: MediaQuery.of(context).size.width*0.95,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 0),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 18.0),
-                child:
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0, top: 12),
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(20.0)),
-                              side: BorderSide(color: Colors.green)),
-                          color: Colors.transparent,
-                          textColor: Colors.green,
-                          onPressed: () async{
-                            displayDialog(false);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 3.0, right: 3, top: 3, bottom: 3),
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.only(right: 3.0),
-                                    child: SizedBox(
-                                      width: 4,
-                                    ),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          displayDialog(false);
+        },
+        child: Icon(Icons.add, color: Colors.black87,),
+        backgroundColor: Colors.white,
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            width: MediaQuery.of(context).size.width*0.95,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 0),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0.0),
+                    child:
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0, top: 12),
+                            child: FlatButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
+                                  side: BorderSide(color: Colors.green)),
+                              color: Colors.transparent,
+                              textColor: Colors.green,
+                              onPressed: () async{
+                                displayDialog(false);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 3.0, right: 3, top: 3, bottom: 3),
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets.only(right: 3.0),
+                                        child: SizedBox(
+                                          width: 4,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets.only(right: 8.0),
+                                        child: Text(
+                                          "Пополнить",
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: 16,
+                                              fontFamily: "MPLUS",
+                                              fontStyle: FontStyle.normal,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.only(right: 8.0),
-                                    child: Text(
-                                      "Пополнить",
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: 16,
-                                          fontFamily: "MPLUS",
-                                          fontStyle: FontStyle.normal,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
 //                      Padding(
 //                        padding: const EdgeInsets.only(left: 12.0, top: 12),
 //                        child: FlatButton(
@@ -175,61 +184,89 @@ class _PageMinusState extends State<PageMinus> {
 //                          ),
 //                        ),
 //                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 12.0, top: 12, right: 12),
-                        child: FlatButton(
-                          onPressed: ()async {
-                            await updateContent();
-                            setState(() {
-
-                            });
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(20.0)),
-                              side: BorderSide(color: colorSumm(Summ))),
-                          color: Colors.transparent,
-                          textColor: Colors.black,
-
-                          child: Padding(
+                          Padding(
                             padding: const EdgeInsets.only(
-                                left: 3.0, right: 3, top: 3, bottom: 3),
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.only(right: 3.0),
-                                    child: iconSumm(Summ),
+                                left: 12.0, top: 12, right: 12),
+                            child: FlatButton(
+                              onPressed: ()async {
+                                await updateContent();
+                                setState(() {
+
+                                });
+                              },
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
+                                  side: BorderSide(color: colorSumm(Summ))),
+                              color: Colors.transparent,
+                              textColor: Colors.black,
+
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 3.0, right: 3, top: 3, bottom: 3),
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets.only(right: 3.0),
+                                        child: iconSumm(Summ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets.only(right: 8.0),
+                                        child: Text(
+                                          Summ.toString(),
+                                          style: TextStyle(
+                                              color: colorSumm(Summ),
+                                              fontSize: 16,
+                                              fontFamily: "MPLUS",
+                                              fontStyle: FontStyle.normal,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.only(right: 8.0),
-                                    child: Text(
-                                      Summ.toString(),
-                                      style: TextStyle(
-                                          color: colorSumm(Summ),
-                                          fontSize: 16,
-                                          fontFamily: "MPLUS",
-                                          fontStyle: FontStyle.normal,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
+                      ),
+                    ),
+
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Icon(Icons.brightness_1, color: Color.fromRGBO(34, 15, 180, .3),),
+                          Text(" - Корректировка", style: TextStyle(color: Colors.black45),),
+
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Icon(Icons.brightness_1, color: Color.fromRGBO(70, 240, 30, .3),),
+                          Text(" - Зарплата", style: TextStyle(color: Colors.black45),),
+
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Icon(Icons.brightness_1, color: Colors.black.withOpacity(0.4),),
+                          Text(" - Расходы", style: TextStyle(color: Colors.black45),),
+
+                        ],
                       ),
                     ],
                   ),
-                ),
-
+                  Content()
+                ],
               ),
-              Content()
-            ],
+            ),
           ),
         ),
       ),
@@ -272,7 +309,7 @@ class _PageMinusState extends State<PageMinus> {
                 displayDialog(!marker);
 
               },
-              child: Icon(Icons.monetization_on, color: marker?Colors.green:Colors.red,  size: 24,),
+              child: Icon(Icons.monetization_on, color: marker?Colors.green:Colors.blueAccent,  size: 24,),
             )
           ],
         ),
@@ -355,15 +392,20 @@ class _PageMinusState extends State<PageMinus> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top :18.0, bottom: 8),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
-                color: Colors.white70,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(contentOneDay.date.day.toString()+ " " + month (contentOneDay.date.month.toString()), style: TextStyle(fontSize: 17, color:  Colors.black87, ),),
-                )),
-          ),
+          child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                  boxShadow: [BoxShadow(
+                      color: Color.fromRGBO(34, 15, 45, .1),
+                      blurRadius: blurSize,
+                      offset: Offset(-1, 0)
+                  )]
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 12.0, right: 12, top: 8, bottom: 8),
+                child: Text(contentOneDay.date.day.toString()+ " " + month (contentOneDay.date.month.toString()), style: TextStyle(fontSize: 17, color:  Colors.black87, ),),
+              )),
         ),
         Column(
           children: List.generate(contentOneDay.plusList.length, (index) {

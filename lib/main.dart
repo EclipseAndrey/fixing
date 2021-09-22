@@ -44,7 +44,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = new TabController(vsync: this, length: 4, initialIndex: 1);
+    controller = new TabController(vsync: this, length: 3, initialIndex: 1);
   }
 
   @override
@@ -62,7 +62,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               new Tab(icon: new Icon(Icons.money_off, color: Colors.black,)),
               new Tab(icon: new Icon(Icons.home, color: Colors.black,)),
               new Tab(icon: new Icon(Icons.history, color: Colors.black,)),
-              new Tab(icon: new Icon(Icons.monetization_on, color: Color.fromRGBO(0, 0, 0, 1),)),
+//              new Tab(icon: new Icon(Icons.monetization_on, color: Color.fromRGBO(0, 0, 0, 1),)),
             ]
         ),
       ),
@@ -74,7 +74,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             minus.PageMinus(),
             general.General(),
             history.History(),
-            plus.PagePlus(),
+//            plus.PagePlus(),
           ],
       ),
     );

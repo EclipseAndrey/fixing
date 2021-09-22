@@ -570,7 +570,7 @@ class _GeneralState extends State<General> {
             child: Column(
               children: List.generate(expans.length, (index) {
                 return Row(children: <Widget>[
-                  Text(expans[index].summ.toString()+"руб. ", style: TextStyle(fontSize: 16, color: Colors.red, decoration: TextDecoration.none, fontWeight: FontWeight.w400),),
+                  Text(expans[index].summ.toString()+" руб. ", style: TextStyle(fontSize: 16, color: Colors.redAccent, decoration: TextDecoration.none, fontWeight: FontWeight.w400),),
                   Text(expans[index].comment, style: TextStyle(fontSize: 16, color: Colors.black, decoration: TextDecoration.none, fontWeight: FontWeight.w400),),
                 ],);
               }),
@@ -679,6 +679,7 @@ var dateTask = note.date;
     if(timeSpend.hour > 0) end +="${timeSpend.hour} ч. ";
     end += (timeSpend.minute%60).toString() + " мин.";
 
+    if(timeSpend.hour > 0 || timeSpend.minute%60 > 0)
     return  Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -690,6 +691,8 @@ var dateTask = note.date;
         ),
       ],
     );
+    else
+      return SizedBox();
 
   }
   Widget CommentW(Note note){

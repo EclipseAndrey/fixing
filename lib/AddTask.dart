@@ -22,7 +22,7 @@ TextEditingController controllerTask = TextEditingController();
 TextEditingController controllerComment = TextEditingController();
 String dateTask =
     DateFormat("yyyy.MM.dd HH:mm", "en_US").format(DateTime.now()).toString();
-String timeSpend = "2020.07.09 01:00";
+String timeSpend = "2020.07.09 00:00";
 String timeStart =
     DateFormat("yyyy.MM.dd HH:mm", "en_US").format(DateTime.now()).toString();
 List<Expans> zatraty = [
@@ -508,7 +508,7 @@ class _AddTaskState extends State<AddTask> {
                     Container(
                       height: 300,
                       child: CupertinoDatePicker(
-                          initialDateTime: DateTime.now(),
+                          initialDateTime: DateParse(timeSpend),
                           mode: CupertinoDatePickerMode.time,
                           onDateTimeChanged: (DateTime dateTime) {
                             print(dateTime.toString());
